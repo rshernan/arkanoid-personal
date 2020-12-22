@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1f1f1f;
+}
+
+main {
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+}
+
+#game {
+    min-width: 480px;
+    max-width: 960px;
+}
+
+#score {
+    margin-left: auto;
+    width: 200px;
+    font-size: 20px;
+    color: white;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #04000f;
+}
+
+.input-text {
+    font-size: 30px;
+    width: 200px;
+    height: 50px;
+    background-color: transparent;
+    color: white;
+    padding: 3px;
+    border: solid #f1f1f1 2px;
+    outline: none;
+    border-radius: 10px;
+}
+
+.input-text:focus {
+    border: none;
+    box-shadow: 0 0 3pt 2pt #f1f1f1;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn {
+    height: 44px;
+    padding: 5px;
+    border-radius: 10px;
+    background: #f1f1f1;
+    border-color: #b4b4b4;
+    font-size: 20px;
+}
+
+.final-page {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    gap: 10px;
+}
+
+.score-board {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.personal-score {
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.name-score {
+    padding: 10px;
+}
+
+.points-score {
+    padding: 10px;
+}
+
+.hidden {
+    display: none;
+}

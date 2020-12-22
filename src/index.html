@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body,
+        html {
+            background-color: black;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <title>Arkanoid</title>
+</head>
+
+<body>
+    <audio id="game-over" class="hidden">
+        <source type="audio/wav" src="src/assets/sounds/game_over.wav">
+    </audio>
+    <audio id="hit" class="hidden">
+        <source type="audio/wav" src="src/assets/sounds/hit.wav">
+    </audio>
+    <audio id="brick" class="hidden">
+        <source type="audio/wav" src="src/assets/sounds/brick.wav">
+    </audio>
+    <main>
+        <section id="initial-page">
+            <div class="main-container">
+                <input type="text" class="input-text" />
+                <button class="btn start-game">Iniciar Juego</button>
+            </div>
+            <aside>
+
+            </aside>
+        </section>
+        <section id="game" class="hidden">
+            <div id="score"> score: 0</div>
+            <canvas></canvas>
+        </section>
+        <section id="final-page" class="hidden">
+            <div class="score-board">
+            </div>
+            <button class="btn back-to-main">Volver al Inicio</button>
+        </section>
+    </main>
+</body>
+
+</html>
