@@ -86,8 +86,8 @@ canvas {
 }
 
 .score-board {
-    overflow-y: scroll;
     overflow-x: hidden;
+    height: 100%;
     gap: 5px;
     display: flex;
     flex-direction: column;
