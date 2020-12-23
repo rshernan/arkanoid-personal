@@ -1,12 +1,15 @@
 import "../css/styles.css";
 
 let scores = [];
-let player;
 
-let start = false;
-let gameOver = false;
-let game = false;
-let score = 0;
+let player;
+let start;
+let gameOver;
+let game;
+let score;
+
+let rightPressed = false;
+let leftPressed = false;
 
 let brickSound = document.getElementById("brick");
 let hitSound = document.getElementById("hit");
@@ -31,6 +34,31 @@ document.querySelector(".back-to-main").addEventListener("click", () => {
     document.querySelector("#final-page").classList.toggle("final-page");
 });
 
+function keyDownHandler(e) {
+    if (e.keyCode == 39) {
+        rightPressed = true;
+    } else if (e.keyCode == 37) {
+        leftPressed = true;
+    }
+    if (e.keyCode == 32) {
+        if (!game && !gameOver) {
+            start = true;
+            game = setInterval(render, 16);
+        }
+    }
+}
+
+function keyUpHandler(e) {
+    if (e.keyCode == 39) {
+        rightPressed = false;
+    } else if (e.keyCode == 37) {
+        leftPressed = false;
+    }
+}
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
 let canvas = document.querySelector("#game canvas");
 let context = canvas.getContext("2d");
 
@@ -52,9 +80,6 @@ let brickHeight = 20;
 let brickPadding = 10;
 let brickOffsetTop = 30;
 let brickWidth = 0;
-
-let rightPressed = false;
-let leftPressed = false;
 
 let canvasDimensions;
 
@@ -116,31 +141,6 @@ function recalculatePositions(previousCanvas, currentCanvas) {
     paddleX = paddleX * widthRatio;
     render();
 }
-
-function keyDownHandler(e) {
-    if (e.keyCode == 39) {
-        rightPressed = true;
-    } else if (e.keyCode == 37) {
-        leftPressed = true;
-    }
-    if (e.keyCode == 32) {
-        if (!game && !gameOver) {
-            start = true;
-            game = setInterval(render, 16);
-        }
-    }
-}
-
-function keyUpHandler(e) {
-    if (e.keyCode == 39) {
-        rightPressed = false;
-    } else if (e.keyCode == 37) {
-        leftPressed = false;
-    }
-}
-
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
 
 function render() {
     if (!gameOver) {
