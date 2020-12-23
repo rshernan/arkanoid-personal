@@ -86,6 +86,7 @@ let canvasDimensions;
 window.addEventListener("resize", onResizeCanvas, false);
 
 function onResizeCanvas() {
+    //calculate new positions on resize canvas
     const newCanvasDimensions = getCanvasDimensions();
     calculateSizes(canvasDimensions, newCanvasDimensions);
     recalculatePositions(canvasDimensions, newCanvasDimensions);
@@ -93,6 +94,7 @@ function onResizeCanvas() {
 }
 
 function getCanvasDimensions() {
+    //get the dimensions of the canvas
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     return {
@@ -102,6 +104,7 @@ function getCanvasDimensions() {
 }
 
 function startGame() {
+    //starts the game and load the first state
     document.querySelector("#initial-page").classList.toggle("hidden");
     document.querySelector("#game").classList.toggle("hidden");
     canvasDimensions = getCanvasDimensions();
@@ -111,12 +114,14 @@ function startGame() {
 }
 
 function calculateSizes(previousCanvas, currentCanvas) {
+    //calculate sizes of the paddle width and the bricks
     paddleWidth = currentCanvas.width / 5;
     brickWidth =
         (currentCanvas.width - brickPadding) / brickColumns - brickPadding;
 }
 
 function prepareScene(canvasdimensions) {
+    //preapre the first scene for initiate the game
     ballX = canvasdimensions.width / 2;
     ballY = canvasdimensions.height - 40 - paddleHeight - ballRadius * 2;
 
@@ -134,6 +139,7 @@ function prepareScene(canvasdimensions) {
 }
 
 function recalculatePositions(previousCanvas, currentCanvas) {
+    // calculate positions for the elements when resize
     let widthRatio = currentCanvas.width / previousCanvas.width;
     let heightRatio = currentCanvas.height / previousCanvas.height;
     ballX = ballX * widthRatio;
@@ -143,6 +149,7 @@ function recalculatePositions(previousCanvas, currentCanvas) {
 }
 
 function render() {
+    //main loop for game
     if (!gameOver) {
         if (start) {
             context.fillStyle = "rgba(0,0,0,0.3)";
@@ -177,6 +184,7 @@ function render() {
 }
 
 function fillListScores() {
+    //fill the scores
     let scoreBoard = document.querySelector(".score-board");
     scoreBoard.innerHTML = "";
     for (score of scores) {
@@ -186,6 +194,7 @@ function fillListScores() {
 }
 
 function createScore(obj) {
+    //create each element on the list scores
     let container = document.createElement("div");
     let name = document.createElement("div");
     let points = document.createElement("div");
@@ -215,7 +224,7 @@ function drawPaddle() {
 }
 
 function detectCollisions() {
-    //calculo impacto bola contra pala
+    //hit ball -> paddle
     if (
         ballY + ballRadius >= canvasDimensions.height - (40 + paddleHeight) &&
         ballY - ballRadius <= canvasDimensions.height - 40
@@ -223,7 +232,7 @@ function detectCollisions() {
         if (speedX < 0) {
             if (ballX - ballRadius > paddleX + paddleWidth) {
                 if (ballX - ballRadius + speedX <= paddleX + paddleWidth) {
-                    //colision derecha
+                    //right collision
                     hitSound.pause();
                     hitSound.currentTime = 0;
                     hitSound.play();
@@ -234,7 +243,7 @@ function detectCollisions() {
         } else {
             if (ballX + ballRadius < paddleX) {
                 if (ballX + ballRadius + speedX >= paddleX) {
-                    //colision izquierda
+                    //left collision
                     hitSound.pause();
                     hitSound.currentTime = 0;
                     hitSound.play();
@@ -256,7 +265,7 @@ function detectCollisions() {
                     ballY + ballRadius + speedY >=
                     canvasDimensions.height - (40 + paddleHeight)
                 ) {
-                    //collision arriba
+                    //top collision
                     hitSound.pause();
                     hitSound.currentTime = 0;
                     hitSound.play();
@@ -274,7 +283,7 @@ function detectCollisions() {
                     ballY - ballRadius + speedY <=
                     canvasDimensions.height - 40
                 ) {
-                    //colision abajo
+                    //bottom collision
                     hitSound.pause();
                     hitSound.currentTime = 0;
                     hitSound.play();
@@ -288,7 +297,7 @@ function detectCollisions() {
     ballY += speedY;
     ballX += speedX;
 
-    //calculo impactos pala contra bola
+    //hits paddle -> ball
     if (
         leftPressed &&
         paddleX + paddleWidth > ballX &&
@@ -344,7 +353,7 @@ function detectCollisions() {
         }
     }
 
-    //calculo colisones bola con limites
+    //hit ball -> limit
     if (
         ballX + speedX > canvasDimensions.width - ballRadius ||
         ballX + speedX < ballRadius
@@ -362,6 +371,7 @@ function detectCollisions() {
         speedY = -speedY;
     }
 
+    //hit ball -> bricks
     for (let c = 0; c < brickColumns; c++) {
         for (let r = 0; r < brickRows; r++) {
             if (!bricks[c][r]) {
@@ -383,7 +393,6 @@ function detectCollisions() {
                                 brickSound.currentTime = 0;
                                 brickSound.play();
                                 brick.status = 0;
-                                //colision derecha
                                 score += 1;
                                 document.querySelector(
                                     "#score"
@@ -403,7 +412,6 @@ function detectCollisions() {
                                 document.querySelector(
                                     "#score"
                                 ).innerHTML = `score: ${score}`;
-                                //colision izquierda
                                 ballX = brick.x - ballRadius - 1;
                                 speedX = -speedX;
                             }
@@ -424,7 +432,6 @@ function detectCollisions() {
                                 document.querySelector(
                                     "#score"
                                 ).innerHTML = `score: ${score}`;
-                                //collision arriba
                                 ballY = brick.y - ballRadius - 1;
                                 speedY = -speedY;
                             }
@@ -443,7 +450,6 @@ function detectCollisions() {
                                 document.querySelector(
                                     "#score"
                                 ).innerHTML = `score: ${score}`;
-                                //colision abajo
                                 ballY = brick.y + brickHeight + ballRadius + 1;
                                 speedY = -speedY;
                             }
@@ -464,6 +470,7 @@ function drawBall() {
 }
 
 function consoleCollision() {
+    //checke for test things
     console.log(`
     canvas height: ${canvasDimensions.height}
     ball radius: ${ballRadius}
@@ -478,6 +485,7 @@ function consoleCollision() {
 }
 
 function drawWall() {
+    //draw the wall precalculated
     for (let c = 0; c < brickColumns; c++) {
         for (let r = 0; r < brickRows; r++) {
             if (!bricks[c][r]) {
